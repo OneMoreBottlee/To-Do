@@ -15,7 +15,7 @@ function CreateCategory() {
         //     return {...prev as any, [category]:[]}
         // })
         setValue("category", "");
-        // console.log(categoryState)
+        // console.log(categoryState)gma...
 
     }
 
