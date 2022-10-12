@@ -1,6 +1,6 @@
 import React from "react";
 import { useSetRecoilState } from "recoil";
-import { IToDo, toDoState } from "../atoms";
+import { Categories, IToDo, toDoState } from "../atoms";
 
 function ToDo({ text, category, id }: IToDo) {
     const setToDos = useSetRecoilState(toDoState)
@@ -13,13 +13,20 @@ function ToDo({ text, category, id }: IToDo) {
             return [...oldToDos.slice(0, targetIndex), newToDo, ...oldToDos.slice(targetIndex + 1)]
         })
     }
+    const deleteClick = () => {
+        setToDos((oldToDos) => {
+            const targetIndex = oldToDos.findIndex(toDo => toDo.id === id)
+            return [...oldToDos.slice(0, targetIndex), ...oldToDos.slice(targetIndex + 1)]
+        })
+    }
 
     return (
         <li>
             <span>{text}</span>
-            {category !== "TO_DO" && <button name="TO_DO" onClick={onClick}>ToDo</button>}
-            {category !== "DOING" && <button name="DOING" onClick={onClick}>Doing</button>}
-            {category !== "DONE" && <button name="DONE" onClick={onClick}>Done</button>}
+            {category !== Categories.TO_DO && <button name={Categories.TO_DO} onClick={onClick}>ToDo</button>}
+            {category !== Categories.DOING && <button name={Categories.DOING} onClick={onClick}>Doing</button>}
+            {category !== Categories.DONE && <button name={Categories.DONE} onClick={onClick}>Done</button>}
+            {category !== Categories.DELETE && <button name={Categories.DELETE} onClick={deleteClick}>DEL</button>}
         </li>
     )
 }
